@@ -6,8 +6,8 @@ import urllib
 import urlparse
 
 BASE_PATH=''
-
-from bottle import route, run, request, response, static_file, HTTPError
+HTML_TEMPLATE='install.html'
+from bottle import route, run, request, response, static_file, HTTPError, template
 
 def make_manifest(meta, assets):
 	root = {}
@@ -63,9 +63,9 @@ def install_page(name):
 	manifest_url = manifest_url.replace('//','/')
 	namevals = 'action=download-manifest&url='+manifest_url
 
-	install_url += namevals
+	manifest_url += namevals
 
-	return '<a href="%s"><h1>install</h1></a>'%(install_url)
+	return template(HTML_TEMPLATE, manifest_url=manifest_url, name=name)
 
 def install_manifest(name):
 	name = urllib.unquote(name)
@@ -140,4 +140,4 @@ def index(name=None, action=None):
 import bottle
 bottle.debug(True)
 
-run(host='10.54.85.13', port=8080, reloader=True)
+run(host='localhost', port=8080, reloader=True)
