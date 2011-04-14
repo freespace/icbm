@@ -68,14 +68,6 @@ def install_page(name):
 	return template(HTML_TEMPLATE, manifest_url=manifest_url, name=name)
 
 def install_manifest(name):
-	name = urllib.unquote(name)
-
-	if not os.path.exists(name):
-		return HTTPError(code=404)
-
-	if not os.path.islink(name) and not os.path.isdir(name):
-		return HTTPError(code=404, output='not a directory')
-
 	class Ctx(object):
 		pass
 
@@ -122,13 +114,20 @@ def install_manifest(name):
 @route(BASE_PATH+'/:name')
 @route(BASE_PATH+'/:name/')
 def index(name=None, action=None):
-	print name, action
 	if not name:
 		return HTTPError(code=404)
 
+	name = urllib.unquote(name)
+
+	if not os.path.exists(name):
+		return HTTPError(code=404)
+
+	if not os.path.islink(name) and not os.path.isdir(name):
+		return HTTPError(code=404, output='not a directory')
+
 	if action == 'manifest':
 		return install_manifest(name)
-	elif action == 'install' or not action:
+	elif not action:
 		return install_page(name)
 	elif action:
 		print action
@@ -136,8 +135,8 @@ def index(name=None, action=None):
 	else:
 		return HTTPError(code=404)
 
+if __name__ == '__main__':
+	import bottle
+	bottle.debug(True)
 
-import bottle
-bottle.debug(True)
-
-run(host='localhost', port=8080, reloader=True)
+	run(host='localhost', port=8080, reloader=True)
