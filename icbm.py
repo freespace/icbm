@@ -138,5 +138,10 @@ def index(name=None, action=None):
 if __name__ == '__main__':
 	import bottle
 	bottle.debug(True)
+	
+	import sys
+	host = 'localhost'
+	if len(sys.argv)>1:
+		host = sys.argv[1]
 
-	run(host='localhost', port=8080, reloader=True)
+	run(host=host, port=8080, reloader=True)
