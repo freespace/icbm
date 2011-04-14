@@ -63,9 +63,9 @@ def install_page(name):
 	manifest_url = manifest_url.replace('//','/')
 	namevals = 'action=download-manifest&url='+manifest_url
 
-	manifest_url += namevals
+	install_url += namevals
 
-	return template(HTML_TEMPLATE, manifest_url=manifest_url, name=name)
+	return template(HTML_TEMPLATE, install_url=install_url, name=name)
 
 def install_manifest(name):
 	class Ctx(object):
