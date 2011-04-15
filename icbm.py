@@ -101,6 +101,18 @@ def install_manifest(name):
 
 	os.path.walk(name, _skywalker, None)
 
+	if not ctx.info_plist:
+		return HTTPError(code=404, output='info plist not found')
+
+	if not ctx.ipa_url:
+		return HTTPError(code=404, output='ipa not found')
+
+	if not ctx.icon_url:
+		return HTTPError(code=404, output='icon not found')
+
+	if not ctx.icon_512_url:
+		return HTTPError(code=404, output='512 icon not found')
+
 	plist = plistlib.readPlist(ctx.info_plist)
 
 	meta = make_meta(plist['CFBundleIdentifier'], plist['CFBundleVersion'], name)
