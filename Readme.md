@@ -10,17 +10,17 @@ How
 Suppose you have an app called AwesomeApp, you create the following directory
 structure:
 
-  AwesomeApp/
-    awesomeapp.ipa 
-    icon.png 
-    icon_512.png 
-    AwesomeApp-Info.plist 
+    AwesomeApp/
+      awesomeapp.ipa 
+      icon.png 
+      icon_512.png 
+      AwesomeApp-Info.plist 
 
 Place it in the same directory as icbm.py and now the ICBM will generate 2
 views:
 
-   http://yoursite.com/webapp/root/AwesomeApp
-   http://yoursite.com/webapp/root/AwesomeApp/manifest
+    http://yoursite.com/webapp/root/AwesomeApp
+    http://yoursite.com/webapp/root/AwesomeApp/manifest
 
 The first generates a HTML page containing a link to install AwesomeApp, while
 the second generates a manifest plist that iOS will use to download the
