@@ -35,4 +35,5 @@ png file with '512' in the filename is assumed to be the full sized icon.
 Finally, the last plist file containing 'info' is assumed to be the
 application's info.plist, from which bundle ID and version is extracted.
 
-
+Note that since `plistlib` can't read binary plists, the info plist should be
+text version, normally called YourApp-Info.plist.
