@@ -4,6 +4,7 @@ import string
 import plistlib
 import urllib
 import urlparse
+import time
 
 BASE_PATH=''
 HTML_TEMPLATE='install.html'
@@ -57,14 +58,10 @@ def _base_url():
 	return p.scheme+'://'+p.netloc+'/'+BASE_PATH
 
 def install_page(name):
-	install_url = 'itms-services://?'
 	manifest_url = _base_url()+name+'/manifest'
-	manifest_url = manifest_url.replace('//','/')
-	namevals = 'action=download-manifest&url='+manifest_url
-
-	install_url += namevals
-
-	return template(HTML_TEMPLATE, install_url=install_url, name=name)
+	install_url = 'itms-services://?action=download-manifest&url='+manifest_url
+	
+	return template(HTML_TEMPLATE, install_url=install_url, name=name,timestamp=time.time())
 
 def install_manifest(name):
 	class Ctx(object):
