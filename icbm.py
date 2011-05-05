@@ -33,8 +33,7 @@ def make_assets(ipa_url, icon_url, icon_512_url, icon_needs_shine=True):
 	assets = []
 
 	assets.append(_asset('software-package', ipa_url))
-	if (icon_512_url):
-		assets.append(_asset('full-size-image', icon_512_url, {'needs-shine':icon_needs_shine}))
+	assets.append(_asset('full-size-image', icon_512_url, {'needs-shine':icon_needs_shine}))
 	assets.append(_asset('display-image', icon_url, {'needs-shine':icon_needs_shine}))
 
 	return assets
@@ -101,6 +100,8 @@ def install_manifest(name):
 
 	os.path.walk(name, _skywalker, None)
 
+	# $todo move this into install_page otherwise the 404 is invisible to
+	# the user
 	if not ctx.info_plist:
 		return HTTPError(code=404, output='info plist not found')
 
