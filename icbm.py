@@ -111,6 +111,9 @@ def install_manifest(name, static=False, base_url=None, ipa_file=None, plist_fil
                     if _easy_match(fname, 'info'):
                         ctx.info_plist = os.path.join(dirname, fname)
 
+            # ensure we only do a top level walk
+            fnames[:]=[]
+
         os.path.walk(name, _skywalker, None)
 
         # $todo move this into install_page otherwise the 404 is invisible to
@@ -138,9 +141,9 @@ def install_manifest(name, static=False, base_url=None, ipa_file=None, plist_fil
     return manifest
 
 @route(BASE_PATH+'/:name/:action')
-@route(BASE_PATH+'/:name')
 @route(BASE_PATH+'/:name/')
-def index(name=None, action=None):
+@route(BASE_PATH+'/:name')
+def index(name=None, action=None, path=None):
     if not name:
         return HTTPError(code=404)
 
@@ -157,7 +160,7 @@ def index(name=None, action=None):
     elif not action:
         return install_page(name)
     elif action:
-        print action
+        print 'action:', action
         return static_file(action, root=name+'/')
     else:
         return HTTPError(code=404)
