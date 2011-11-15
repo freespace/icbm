@@ -38,6 +38,20 @@ application's info.plist, from which bundle ID and version is extracted.
 Note that since `plistlib` can't read binary plists, the info plist should be
 text version, normally called YourApp-Info.plist.
 
+Sample info.plist
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleIdentifier</key>
+    <string>com.pictorii.${PRODUCT_NAME:rfc1034identifier}</string>
+    <key>CFBundleVersion</key>
+    <string>1.91</string>
+</dict>
+</plist>
+```
 Icons have the gloss applied by default. To stop this put 'no_gloss' in the
 filename.
 
