@@ -37,3 +37,22 @@ application's info.plist, from which bundle ID and version is extracted.
 
 Note that since `plistlib` can't read binary plists, the info plist should be
 text version, normally called YourApp-Info.plist.
+
+Icons have the gloss applied by default. To stop this put 'no_gloss' in the
+filename.
+
+Sample WSGI Configuration
+=========================
+```
+<VirtualHost *:80>
+  ServerName icbm.blah.com
+  WSGIDaemonProcess icbm user=www-data group=www-data processes=1 threads=5
+  WSGIScriptAlias / /path/to/icbm/app.wsgi
+  <Directory /path/to/icbm/>
+      WSGIProcessGroup icbm
+      WSGIApplicationGroup %{GLOBAL}
+      Order deny,allow
+      Allow from all
+  </Directory>
+</VirtualHost>
+```
