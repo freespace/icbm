@@ -152,7 +152,7 @@ def index(name=None, action=None):
     if not os.path.islink(name) and not os.path.isdir(name):
         return HTTPError(code=404, output='not a directory')
 
-    if action == 'manifest':
+    if action == 'manifest.xml':
         return install_manifest(name)
     elif not action:
         return install_page(name)
