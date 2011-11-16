@@ -5,9 +5,12 @@ import plistlib
 import urllib
 import urlparse
 import time
+import sys
 
 BASE_PATH=''
 HTML_TEMPLATE='install.html'
+sys.path.append('./deps/bottle/')
+
 from bottle import route, run, request, response, static_file, HTTPError, template
 
 def make_manifest(meta, assets):
@@ -202,5 +205,4 @@ class ICBM(OptionMatcher):
         run(host=host, port=port, reloader=True)
 
 if __name__ == '__main__':
-    import sys
     sys.exit(ICBM().process(sys.argv))
