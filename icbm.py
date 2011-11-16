@@ -178,13 +178,15 @@ def index(name=None, action=None, path=None):
 from optmatch import OptionMatcher, optmatcher, optset
 class ICBM(OptionMatcher):
     @optmatcher
-    def run_static(self, staticFlag, baseURL, name, ipaFile, plistFile, iconFile, icon512File):
-        index=open('index.html','w')
+    def run_static(self, staticFlag, baseURL, name, ipaFile, plistFile, iconFile, icon512File,outputdir='.'):
+        import os
+        outputdir += '/'
+        index=open(outputdir+'index.html','w')
         with index:
             index.writelines(install_page(name, base_url = baseURL, browser_check=False))
         print 'wrote index.html'
 
-        manifest=open('manifest.xml', 'w')
+        manifest=open(outputdir+'manifest.xml', 'w')
         with manifest:
             icon_gloss = not _easy_match(iconFile, 'no_gloss')
             manifest.writelines(install_manifest(   name,
