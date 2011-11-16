@@ -57,13 +57,20 @@ def _base_url():
     p = urlparse.urlsplit(request.url)
     return p.scheme+'://'+p.netloc+'/'+BASE_PATH
 
-def install_page(name, base_url = None):
+def install_page(name, base_url = None, browser_check=True):
     if not base_url:
         base_url = _base_url()+name
     manifest_url = base_url+'/manifest.xml'
     install_url = 'itms-services://?action=download-manifest&url='+manifest_url
 
-    return template(HTML_TEMPLATE, install_url=install_url, name=name,timestamp=time.time())
+    browser_warning = False
+    if browser_check:
+        ua = request.headers.get('User-Agent')
+        print 'user agent is', ua
+        acceptable_uas = ['iPod', 'iPhone', 'iPad']
+        browser_warning = not len(filter(lambda x: x in ua, acceptable_uas))
+
+    return template(HTML_TEMPLATE, install_url=install_url, name=name,timestamp=time.ctime(), browser_warning = browser_warning)
 
 def install_manifest(name, static=False, base_url=None, ipa_file=None, plist_file=None, icon_file=None, icon512_file=None, icon_gloss=True):
     class Ctx(object):
@@ -171,7 +178,7 @@ class ICBM(OptionMatcher):
     def run_static(self, staticFlag, baseURL, name, ipaFile, plistFile, iconFile, icon512File):
         index=open('index.html','w')
         with index:
-            index.writelines(install_page(name, base_url = baseURL))
+            index.writelines(install_page(name, base_url = baseURL, browser_check=False))
         print 'wrote index.html'
 
         manifest=open('manifest.xml', 'w')
